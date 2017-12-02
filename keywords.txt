@@ -1,0 +1,14 @@
+# Syntax Highlighting For LCD5110 library
+
+# Class and Datatypes (KEYWORD1)
+LCD5110	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+clear	KEYWORD2
+cursor	KEYWORD2
+backlight	KEYWORD2
+inverse	KEYWORD2
+printStr	KEYWORD2
+printImage	KEYWORD2
+
+# Constants (LITERAL1)
