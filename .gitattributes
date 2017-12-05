@@ -1,4 +1,2 @@
-*.pde linguist-language=Arduino
-*.h linguist-language=Arduino
-*.cpp linguise-language=Arduino
-
+* linguist-vendored
+*.pde linguist-vendored=false
