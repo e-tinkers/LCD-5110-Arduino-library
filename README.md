@@ -9,15 +9,16 @@ Download the repository and move it into your Sketchbook/Libraries directory. Fo
 
 The LCD module is connected with Arduino I/O pins as follow:
 
-LCD --- Arduino I/O pin  
-CLK --- D13 (SCLK)  
-DN --- D11 (MOSI)  
-DC --- D10  
-RST --- D9  
-SCE --- D8  
-LED --- D7  
-GND --- GND  
-VCC --- 3v3
+|**LCD** |**Arduino I/O pin** |
+|:------:|:-----------------:|  
+|CLK|D13 (SCLK)|
+|DN|D11 (MOSI)|  
+|DC|D10|
+|RST|D9|  
+|SCE|D8|  
+|LED|D7|  
+|GND|GND|  
+|VCC|3v3|
 
 * D7 connects to LED pin via a 220-ohm resistor to restrict the LED current.
 
