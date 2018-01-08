@@ -9,8 +9,8 @@ Download the repository and move it into your Sketchbook/Libraries directory. Fo
 
 The LCD module is connected with Arduino I/O pins as follow:
 
-|**LCD** |**Arduino I/O pin** |
-|:------:|:-----------------:|  
+|**LCD Pin** |**Arduino I/O Pin** |
+|:----------:|:------------------:|  
 |CLK|D13 (SCLK)|
 |DN|D11 (MOSI)|  
 |DC|D10|
