@@ -1,5 +1,5 @@
 # LCD5110 Arduino library
-This repository is an Arduino library for LCD 5110 (a.k.a. Nokia 5110 or PCD8544) display module.
+This repository is an Arduino library for LCD 5110 (a.k.a. Nokia 5110 or PCD8544) display module. There is also a python library that shares the same APIs for Raspberry Pi [available](https://github.com/e-tinkers/LCD-5110-Raspberry-Library).
 
 ## Installation
 
@@ -10,21 +10,13 @@ Download the repository and move it into your Sketchbook/Libraries directory. Fo
 The LCD module is connected with Arduino I/O pins as follow:
 
 LCD --- Arduino I/O pin
-
 CLK --- D13 (SCLK)
-
 DN --- D11 (MOSI)
-
 DC --- D10
-
 RST --- D9
-
 SCE --- D8
-
 LED --- D7
-
 GND --- GND
-
 VCC --- 3v3
 
 * D7 connects to LED pin via a 220-ohm resistor to restrict the LED current.
@@ -33,47 +25,36 @@ VCC --- 3v3
 
 
 **LCD5110 lcd**
+- Create an instance called lcd of class LCD5110\. The class construct will:
 
-Create an instance called lcd of class LCD5110\. The class construct will:
-
-  1. initialise GPIO and SPI ports;
-
-  2. clear the screen and internal display memory
-
-  3. set cursor to row 1, col 1
-
-  4. set LCD backlight = Off
-
-  5. set LCD display mode = Normal
+    1. initialise GPIO and SPI ports;
+    2. clear the screen and internal display memory
+    3. set cursor to row 1, col 1
+    4. set LCD backlight = Off
+    5. set LCD display mode = Normal
 
 
 **void LCD5110.clear(void)**
-
-Clear LCD screen and internal DDRAM, it is also set cursor to row 1, col 1
+- Clear LCD screen and internal DDRAM, it is also set cursor to row 1, col 1
 
 
 **void LCD5110.cursor(unsigned char row, unsigned char col)**
-
 - Set LCD cursor to row (from 1 to 6), col (from 1 to 14)
 
 
 **void LCD5110.backlight(boolean true|false)**
-
 - Set LCD backlight on (true) or off (false)
 
 
 **void LCD5110.inverse(boolean true/false)**
-
 - Set display mode to Inverse (true) or Normal (false)
 
 
 **void LCD5110.printStr(unsigned char str[])**
-
 - Print str[] array on screen
 
 
 **void LCD5110.printImage(unsigned char image[])**
-
 - Print image[], image is an array[504] of pixels data
 
 ## More information
