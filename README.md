@@ -24,7 +24,7 @@ By default, the library assumed that the LCD module is connected with Arduino I/
 
 * D7 connects to LED pin via a 220-ohm resistor to restrict the LED current.
 
-In case you need to use alternative pins for connecting to the LCD module, you culd re-define the pin assignment using `#include` directive at the beginning of your Arduino sketch. See this example:
+In case you need to use alternative pins for connecting to the LCD module, you culd re-define the pin assignment using `#define` directive at the beginning of your Arduino sketch. See this example:
 
 ```
 #define LED D5  // use D5 instead of default D7 for LED backlight
