@@ -18,16 +18,16 @@ By default, the library assumed that the LCD module is connected with Arduino I/
 |DC|D10|
 |RST|D9|
 |SCE|D8|
-|LED|D7|
+|BACKLIGHT|D7|
 |GND|GND|
 |VCC|3v3|
 
-* D7 connects to LED pin via a 220-ohm resistor to restrict the LED current.
+* D7 connects to BACKLIGHT pin via a 220-ohm resistor to restrict the LED current.
 
 In case you need to use alternative pins for connecting to the LCD module, you culd re-define the pin assignment using `#define` directive at the beginning of your Arduino sketch. See this example:
 
 ```
-#define LED D5  // use D5 instead of default D7 for LED backlight
+#define BACKLIGHT D5  // use D5 instead of default D7 for LCD backlight
 ```
 
 ## API for LCD5110 library
@@ -51,7 +51,7 @@ In case you need to use alternative pins for connecting to the LCD module, you c
 
 
 **`void LCD5110.backlight(const uint8_t ON|OFF)`**
-- set LCD backlight to ON or OFF
+- set ON or OFF of LCD backlight
 
 
 **`void LCD5110.inverse(const uint8_t ON|OFF)`**

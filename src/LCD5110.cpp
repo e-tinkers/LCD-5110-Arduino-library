@@ -9,7 +9,7 @@ LCD5110::LCD5110(void)
   pinMode(DC, OUTPUT);
   pinMode(SCE, OUTPUT);
   pinMode(RST, OUTPUT);
-  pinMode(LED, OUTPUT);
+  pinMode(BACKLIGHT, OUTPUT);
 
   SPI.begin();
   SPI.setDataMode(SPI_MODE0);
@@ -54,7 +54,7 @@ void LCD5110::_write(const uint8_t mode, char data) {
 }
 
 void LCD5110::backlight(const uint8_t state) {
-  digitalWrite(LED, state);
+  digitalWrite(BACKLIGHT, state);
 }
 
 void LCD5110::inverse(const uint8_t inv) {
