@@ -40,13 +40,13 @@ void LCD5110::cursor(uint8_t row, uint8_t col) {
     return;
   }
   _write(CMD, 0x40 | ( row - 1) );
-  _write(CMD, 0x80 | ( col - 1)*6 );
+  _write(CMD, 0x80 | ( col - 1) * 6 );
 }
 
 void LCD5110::_write(const uint8_t mode, char data) {
   digitalWrite(SCE, LOW);
   digitalWrite(DC, mode);  //HIGH = Data mode, LOW = Command mode
-  if (mode == HIGH & _inverse == true) {
+  if (mode == HIGH & _inverse == ON) {
       data = ~ data;
   }
   SPI.transfer(data);

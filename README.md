@@ -18,23 +18,16 @@ By default, the library assumed that the LCD module is connected with Arduino I/
 |DC|D10|
 |RST|D9|
 |SCE|D8|
-|BACKLIGHT|D7|
+|LED|D7|
 |GND|GND|
 |VCC|3v3|
 
-* D7 connects to BACKLIGHT pin via a 220-ohm resistor to restrict the LED current.
-
-In case you need to use alternative pins for connecting to the LCD module, you culd re-define the pin assignment using `#define` directive at the beginning of your Arduino sketch. See this example:
-
-```
-#define BACKLIGHT D5  // use D5 instead of default D7 for LCD backlight
-```
+* LED = Backlight. Connects D7 to the backlight pin via a 220-ohm resistor to restrict the current flow through the GPIO D7.
 
 ## API for LCD5110 library
 
-
 **`LCD5110 lcd`**
-- Create an instance called lcd of class LCD5110\. The class construct will:
+- Create an instance called lcd of class LCD5110. The class construct will:
 
     1. initialise GPIO and SPI ports;
     2. clear the screen and internal display memory
