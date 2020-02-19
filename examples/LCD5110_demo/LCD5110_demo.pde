@@ -1,5 +1,37 @@
 #include <LCD5110.h>
 
+/*
+
+ This example sketch demonstrates on how to use the LCD5110 Arduino library
+
+ Hardware interface: The following pins for interfacing with the LCD module
+  LCD     Arduino I/O pin
+  CLK     D13 (SCLK)
+  DN      D11 (MOSI)
+  DC      D10
+  RST     D9
+  SCE     D8
+  LED     D7
+  GND     GND
+  VCC     3v3
+  * D7 connects to LED pin via a 220-ohm resistor to restrict the LED current.
+  
+ API for LCD5110 library
+
+ LCD5110 lcd - create an instance called lcd of class LCD5110. The class construct will:
+     1. initialise GPIO and SPI ports;
+     2. clear the screen and internal display memory
+     3. set cursor to col 1 and rol 1
+     4. set LCD display mode = Normal
+  void LCD5110.clear(void) - clear LCD screen and set cursor to row 1 and col 1
+  void LCD5110.cursor(uint8_t row, uint8_t col) - set LCD cursor to row, col
+  void LCD5110.backlight(const uint8_t ON|OFF) - set LCD backlight ON or OFF
+  void LCD5110.inverse(const uint8_t ON/OFF) - Set display mode to Inverse with ON or Normal with OFF
+  void LCD5110.printStr(const char *str) - print str[] array
+  void LCD5110.printImage(const char *image) - print image from image[], image is an array[504] of pixels data
+
+*/
+
 // Use https://www.e-tinkers.com/nokia5110-lcd-image-creator/ to create your own logo
 const char eTinkersLogo[504] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xf0, 0xf0, 0xf8, 0xfc, 0xfc, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0x7c, 0xfc, 0xfc, 0xf8, 0xf0, 0xf0, 0xe0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
