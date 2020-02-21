@@ -11,16 +11,16 @@ Download the repository and move it into your Sketchbook/Libraries directory. Fo
 
 By default, the library assumed that the LCD module is connected with Arduino I/O pins as follow:
 
-|**LCD Pin** |**Arduino I/O Pin** |
-|:----------:|:------------------:|
-|CLK|D13 (SCLK)|
-|DN|D11 (MOSI)|
-|DC|D10|
-|RST|D9|
-|SCE|D8|
-|LED|D7|
-|GND|GND|
-|VCC|3v3|
+|**LCD Pin** |**Arduino I/O Pin** |**Functionality**|
+|:----------:|:------------------:|:---------------:|
+|CLK|D13 (SCLK)|Serial clock|
+|DN|D11 (MOSI)|Master output, Slave input|
+|DC|D10|0: Command mode, 1: Data mode|
+|RST|D9|Reset the chip when RST=0|
+|SCE|D8|System Chip Enable when SCE=0|
+|LED|D7|Backlight LED,ON = HIGH, OFF=LOW|
+|GND|GND|System ground|
+|VCC|3v3|Power Supply from 2.7 - 5v|
 
 * LED = Backlight. Connects D7 to the backlight pin via a 220-ohm resistor to restrict the current flow through the GPIO D7.
 
@@ -58,5 +58,7 @@ By default, the library assumed that the LCD module is connected with Arduino I/
 **`void LCD5110.printImage(const char *image)`**
 - Print image[], image is an array[504] of pixels data
 
+## Wiring between LCD5110 and Arduino
+[![wiring diagram between LCD5110 and Arduino](https://github.com/e-tinkers/ntc-thermistor-with-arduino-and-esp32/blob/master/LCD5110_wiring_with_arduino.png)](https://github.com/e-tinkers/ntc-thermistor-with-arduino-and-esp32/blob/master/LCD5110_wiring_with_arduino.png)
 ## Extra
 [Nokia5110 LCD Image Creator](https://www.e-tinkers.com/nokia5110-lcd-image-creator/) is a web application that providea pixel canvas for creating logo image to be used by LCD5110. The app will generate a logo array that you can copy and paste into your sketch.
