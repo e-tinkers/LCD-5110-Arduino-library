@@ -54,7 +54,7 @@ By default, the library assumed that the LCD module is connected with SPI pins b
 
 
 **`void LCD5110.printImage(const char *image)`**
-- Print image[], image is an array[504] of pixels data. The method is epecting the image is declared with PROGMEM modifier (that is, it get read from the program memory). See example for the usage.
+- Print image[], image is an array[504] of pixels data. The method is epecting the image to be declared with PROGMEM modifier (that is, it get read from the program memory). See example for the usage.
 
 ## Wiring between LCD5110 and Arduino
 [![wiring diagram between LCD5110 and Arduino](https://github.com/e-tinkers/LCD-5110-Arduino-library/blob/master/LCD5110_wiring_with_arduino.png)](https://github.com/e-tinkers/LCD-5110-Arduino-library/blob/master/LCD5110_wiring_with_arduino.png)
