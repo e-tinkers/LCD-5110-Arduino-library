@@ -56,7 +56,7 @@ By default, the library assumed that the LCD module is connected with SPI pins b
 **`void LCD5110.printImage(const char *image)`**
 - Print image[], image is an array[504] of pixels data. The method is epecting the image to be declared with PROGMEM modifier (that is, it get read from the program memory). See example for the usage.
 
-## Wiring between LCD5110 and Arduino
-[![wiring diagram between LCD5110 and Arduino](https://github.com/e-tinkers/LCD-5110-Arduino-library/blob/master/LCD5110_wiring_with_arduino.png)](https://github.com/e-tinkers/LCD-5110-Arduino-library/blob/master/LCD5110_wiring_with_arduino.png)
 ## Extra
 [Nokia5110 LCD Image Creator](https://www.e-tinkers.com/nokia5110-lcd-image-creator/) is a web application that providea pixel canvas for creating logo image to be used by LCD5110. The app will generate a logo array that you can copy and paste into your sketch.
+
+PCD8544 Controller Datasheet: https://www.e-tinkers.com/wp-content/uploads/2017/11/PCD8544_Controller_Datasheet.pdf
