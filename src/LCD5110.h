@@ -7,22 +7,19 @@
 #define LCD5110_h
 
 #include "Arduino.h"
-
-//spi pin assignment
-#define CLK 13 // Must connect to Arduino D13 (SPI SCLK) when using SPI library
-#define DN 11  // Must connect to Arduino D11 (SPI MOSI) when using SPI library
-#define DC 10
-#define RST 9
-#define SCE 8
-#define LED 7
+#include "SPI.h"
 
 #define ON HIGH
 #define OFF LOW
+#define CMD LOW
+#define DATA HIGH
+#define LCD_WIDTH 84
+#define LCD_HEIGHT 48
 
 class LCD5110
 {
   public:
-    LCD5110(void);
+    LCD5110(const uint8_t dc, const uint8_t led);
     void clear(void);
     void cursor(uint8_t row, uint8_t col);
     void backlight(const uint8_t state);
@@ -31,11 +28,9 @@ class LCD5110
     void printImage(const char *image);
   private:
     void _write(const uint8_t mode, char data);
-    uint8_t _inverse;
-    const uint8_t LCD_WIDTH = 84;
-    const uint8_t LCD_HEIGHT = 48;
-    const uint8_t CMD = LOW;
-    const uint8_t DATA = HIGH;
+    uint8_t _inverse = OFF;
+    uint8_t _DC;
+    uint8_t _BACKLIGHT;
 };
 
 #endif

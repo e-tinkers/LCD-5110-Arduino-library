@@ -1,22 +1,19 @@
-#include "Arduino.h"
 #include "LCD5110.h"
-#include "SPI.h"
 
-LCD5110::LCD5110(void)
+LCD5110::LCD5110(const uint8_t dc, const uint8_t led)
 {
-  pinMode(CLK, OUTPUT);
-  pinMode(DN, OUTPUT);
-  pinMode(DC, OUTPUT);
-  pinMode(SCE, OUTPUT);
-  pinMode(RST, OUTPUT);
-  pinMode(BACKLIGHT, OUTPUT);
+  _DC = dc;
+  _BACKLIGHT = led;
 
-  SPI.begin();
+  pinMode(_DC, OUTPUT);
+  pinMode(_BACKLIGHT, OUTPUT);
+  pinMode(SS, OUTPUT);
+  digitalWrite(SS, HIGH);
+
+  SPI.begin();    //set SCK, MOSI, and SS to outputs, pulling SCK and MOSI low, and SS high.
   SPI.setDataMode(SPI_MODE0);
   SPI.setBitOrder(MSBFIRST);
 
-  digitalWrite(RST, HIGH);
-  digitalWrite(SCE, HIGH);
   _write(CMD, 0x21);  // Set Extended Command set
   _write(CMD, 0xb2);  // Set Vlcd to 6v (LCD Contrast)
   _write(CMD, 0x13);  // Set voltage bias system 1:48 (Viewing Angle)
@@ -28,9 +25,8 @@ LCD5110::LCD5110(void)
 }
 
 void LCD5110::clear(void) {
-  int pixel;
   cursor(0,0);
-  for (pixel=(LCD_WIDTH * LCD_HEIGHT / 8); pixel > 0; pixel--) {
+  for (int pixel=(LCD_WIDTH * LCD_HEIGHT / 8); pixel > 0; pixel--) {
     _write(DATA, 0x00);
   }
 }
@@ -44,17 +40,17 @@ void LCD5110::cursor(uint8_t row, uint8_t col) {
 }
 
 void LCD5110::_write(const uint8_t mode, char data) {
-  digitalWrite(SCE, LOW);
-  digitalWrite(DC, mode);  //HIGH = Data mode, LOW = Command mode
-  if (mode == HIGH & _inverse == ON) {
+  digitalWrite(_SCE, LOW);
+  digitalWrite(_DC, mode);  //HIGH = Data mode, LOW = Command mode
+  if (mode == DATA & _inverse == ON) {
       data = ~ data;
   }
   SPI.transfer(data);
-  digitalWrite(SCE, HIGH);
+  digitalWrite(_SCE, HIGH);
 }
 
 void LCD5110::backlight(const uint8_t state) {
-  digitalWrite(BACKLIGHT, state);
+  digitalWrite(_BACKLIGHT, state);
 }
 
 void LCD5110::inverse(const uint8_t inv) {
@@ -69,7 +65,7 @@ void LCD5110::printImage(const char *image) {
 }
 
 void LCD5110::printStr(const char *str) {
-  const char FONT_TABLE [][5] = {
+  static const char FONT_TABLE [][5] PROGMEM = {
     { 0x00, 0x00, 0x00, 0x00, 0x00 }, // 0x20, space
     { 0x00, 0x00, 0x5f, 0x00, 0x00 }, // 0x21, !
     { 0x00, 0x07, 0x00, 0x07, 0x00 }, // 0x22, "
@@ -171,8 +167,7 @@ void LCD5110::printStr(const char *str) {
   while (str[p]!='\0') {
     if ( (str[p] >= 0x20) & (str[p] <= 0x7f) ) {
       for (int i = 0; i < 5; i++) {
-        char b = FONT_TABLE[str[p] - 32][i];
-        _write(DATA, b);
+        _write(DATA, pgm_read_byte_near(FONT_TABLE[str[p] - 32] + i));
       }
       _write(DATA, 0x00);
     }

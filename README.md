@@ -1,38 +1,36 @@
 # LCD5110 Arduino library
-This is a simple and easy-to-use Arduino library for LCD 5110 (a.k.a. Nokia 5110 or PCD8544) display module. Unlike other libraries that try to be swiss-knift for all LCD modules, this library targeting only LCD5110 with compact code and reliable SPI interface.
-
-There is also a python library that shares the same APIs for Raspberry Pi [available](https://github.com/e-tinkers/LCD-5110-Raspberry-Library).
+This is a simple and SRAM-efficient Arduino library for LCD 5110 (a.k.a. Nokia 5110 or PCD8544) display module. Unlike other libraries that try to be swiss-knift for all LCD modules, this library targeting only on LCD modules with PCD8544 chip with compact code and reliable SPI interface. It has extremely low usage of SRAM with only 13 bytes (depends on MCU used).
 
 ## Installation
 
-Download the repository and move it into your Sketchbook/Libraries directory. For **Linux** machine, the directory is home/username/Sketchbook/Libraries/. For **Windows** or **Macintosh** machines, it is Documents/Arduino/Libraries/.
+Download the repository and move it into your Sketchbook/Libraries directory. Or intall using `git clone https://github.com/e-tinkers/LCD-5110-Arduino-library`.
 
 ## Hardware interface
 
-By default, the library assumed that the LCD module is connected with Arduino I/O pins as follow:
+By default, the library assumed that the LCD module is connected with SPI pins based on whatever the Arduino board you are using. The only extra pins that you will need to defined when creating an instance of LCD class are pins to be used for DC and LED pins, you can use any Digital I/O pins, here is an example when connecting to an Arduino Nano where pin 8 is used as DC, and pin 7 is used as LED control:
 
 |**LCD Pin** |**Arduino I/O Pin** |**Functionality**|
 |:----------:|:------------------:|:---------------:|
-|CLK|D13 (SCLK)|Serial clock|
-|DN|D11 (MOSI)|Master output, Slave input|
-|DC|D10|0: Command mode, 1: Data mode|
-|RST|D9|Reset the chip when RST=0|
-|SCE|D8|System Chip Enable when SCE=0|
+|CLK|SCK|Serial clock|
+|DN|MOSI|Master output, Slave input|
+|DC|D8|0: Command mode, 1: Data mode|
+|RST|RST|Reset the chip when RST=0|
+|SCE|SS|System Chip Enable when SCE=0|
 |LED|D7|Backlight LED,ON = HIGH, OFF=LOW|
 |GND|GND|System ground|
 |VCC|3v3|Power Supply from 2.7 - 5v|
 
-* LED = Backlight. Connects D7 to the backlight pin via a 220-ohm resistor to restrict the current flow through the GPIO D7.
+* LED = Backlight. Connects D7 to the backlight pin via a 330-ohm (or 220-ohm for 3.3v supply) resistor to restrict the current flow through the GPIO D7.
 
 ## API for LCD5110 library
 
-**`LCD5110 lcd`**
-- Create an instance called lcd of class LCD5110. The class construct will:
+**`LCD5110 lcd(uint8_t dc, uint8_t led)`**
+- Create an instance of class LCD5110. The class construct will:
 
-    1. initialise GPIO and SPI ports;
+    1. initialise GPIO and SPI ports together the pins passed in for using as DC and LED backlight;
     2. clear the screen and internal display memory
     3. set cursor to row 1, col 1
-    4. set LCD display mode = Normal
+    4. set LCD display mode = Normal (i.e. non-inverse)
 
 
 **`void LCD5110.clear(void)`**
@@ -52,11 +50,11 @@ By default, the library assumed that the LCD module is connected with Arduino I/
 
 
 **`void LCD5110.printStr(const char *str)`**
-- Print str[] array on screen
+- Print str[] array on the LCD screen
 
 
 **`void LCD5110.printImage(const char *image)`**
-- Print image[], image is an array[504] of pixels data
+- Print image[], image is an array[504] of pixels data. The method is epecting the image is declared with PROGMEM modifier (that is, it get read from the program memory). See example for the usage.
 
 ## Wiring between LCD5110 and Arduino
 [![wiring diagram between LCD5110 and Arduino](https://github.com/e-tinkers/LCD-5110-Arduino-library/blob/master/LCD5110_wiring_with_arduino.png)](https://github.com/e-tinkers/LCD-5110-Arduino-library/blob/master/LCD5110_wiring_with_arduino.png)
