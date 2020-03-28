@@ -60,7 +60,7 @@ void LCD5110::inverse(const uint8_t inv) {
 void LCD5110::printImage(const char *image) {
   cursor(1,1);
   for (int i = 0; i < (LCD_WIDTH * LCD_HEIGHT / 8); i++) {
-    _write(DATA, image[i]);
+    _write(DATA, pgm_read_byte_near(image + i));
   }
 }
 
