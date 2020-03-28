@@ -11,8 +11,6 @@ LCD5110::LCD5110(const uint8_t dc, const uint8_t led)
   digitalWrite(SS, HIGH);
 
   SPI.begin();    //set SCK, MOSI, and SS to outputs, pulling SCK and MOSI low, and SS high.
-  SPI.setDataMode(SPI_MODE0);
-  SPI.setBitOrder(MSBFIRST);
 
   _write(CMD, 0x21);  // Set Extended Command set
   _write(CMD, 0xb2);  // Set Vlcd to 6v (LCD Contrast)
@@ -21,7 +19,6 @@ LCD5110::LCD5110(const uint8_t dc, const uint8_t led)
   clear(); // Clear all display memory and set cursor to 1,1
   _write(CMD, 0x09);  // Set all pixels ON
   _write(CMD, 0x0c);  // Set display mode to Normal
-
 }
 
 void LCD5110::clear(void) {
@@ -40,6 +37,7 @@ void LCD5110::cursor(uint8_t row, uint8_t col) {
 }
 
 void LCD5110::_write(const uint8_t mode, char data) {
+  SPI.beginTransaction(SPISettings(16000000, MSBFIRST, SPI_MODE0));
   digitalWrite(_SCE, LOW);
   digitalWrite(_DC, mode);  //HIGH = Data mode, LOW = Command mode
   if (mode == DATA & _inverse == ON) {
@@ -47,6 +45,7 @@ void LCD5110::_write(const uint8_t mode, char data) {
   }
   SPI.transfer(data);
   digitalWrite(_SCE, HIGH);
+  SPI.endTransaction();
 }
 
 void LCD5110::backlight(const uint8_t state) {
