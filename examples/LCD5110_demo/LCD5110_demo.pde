@@ -22,10 +22,12 @@ void setup() {
 }
 
 void loop() {
+  static const website[] PROGMEM = "e-tinkers.com";
+
   lcd.cursor(2, 2);   // Set cursor to row 2, column 2
   lcd.printStr(F("Hello World!"));
   lcd.cursor(4, 2);
-  lcd.printStr(F("e-tinkers.com"));
+  lcd.printStr((__FlashStringHelper *) website);
   lcd.inverse(ON);
   lcd.cursor(6,1);
   lcd.printStr(F("** Nov 2017 **"));
