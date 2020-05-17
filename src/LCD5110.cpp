@@ -185,7 +185,7 @@ void LCD5110::printStr(const char *str) {
 void LCD5110::printStr(const __FlashStringHelper *strLiteral) {
   PGM_P p = reinterpret_cast<PGM_P>(strLiteral);
 
-  char *ptr = (char *)malloc(strlen_P(p));
+  char *ptr = (char *)malloc(strlen_P(p)+1);
   if (ptr != NULL) {  // if memory allocation successful
     strcpy_P(ptr, p);
     printStr(ptr);    // function overload
