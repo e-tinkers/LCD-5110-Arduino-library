@@ -25,12 +25,12 @@ void loop() {
   static const website[] PROGMEM = "e-tinkers.com";
 
   lcd.cursor(2, 2);   // Set cursor to row 2, column 2
-  lcd.printStr(F("Hello World!"));
+  lcd.printStr("Hello World!");  // passing string literal. This take up SRAM space
   lcd.cursor(4, 2);
-  lcd.printStr((__FlashStringHelper *) website);
+  lcd.printStr((__FlashStringHelper *) website);  // passing PROGMEM varibal
   lcd.inverse(ON);
   lcd.cursor(6,1);
-  lcd.printStr(F("** Nov 2017 **"));
+  lcd.printStr(F("** Nov 2017 **"));  // keep string literal in program space
   lcd.inverse(OFF);
   delay(5000);
 

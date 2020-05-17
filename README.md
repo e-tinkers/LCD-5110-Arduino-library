@@ -54,8 +54,8 @@ By default, the library assumed that the LCD module is connected with SPI pins b
 
 
 **`void LCD5110.printStr(const char *str)`**
-- Print str[] array on the LCD screen.
-
+**`void LCD5110.printStr((__FlashStringHelper *) *str)`**
+- Print string on the LCD screen. The string can be either a c string array or string literal. Noted that both c string array and string literal will be loaded into SRAM during execution. To save memory usage, it is recommended to use F() macro or PROGMEM variable when calling `LCD5110.printStr()`. See example for the usage.
 
 **`void LCD5110.printImage(const char *image)`**
 - Print image[], image is an array[504] of pixels data. The method is expecting the image to be declared with PROGMEM modifier (that is, it get read from the program memory). See example for the usage.
