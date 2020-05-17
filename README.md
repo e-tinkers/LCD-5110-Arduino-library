@@ -1,5 +1,5 @@
 # Simple LCD5110/PCD8544 library
-This is a simple and SRAM-efficient Arduino library for LCD 5110 (a.k.a. Nokia 5110 or PCD8544) display module. Unlike other libraries that try to be swiss-knift for all LCD modules, this library targeting only on LCD modules with PCD8544 chip with compact code and reliable SPI interface. It has extremely low usage of SRAM with only 13 bytes (depends on MCU used).
+This is a simple and SRAM-efficient Arduino library for LCD 5110 (a.k.a. Nokia 5110 or PCD8544) display module. Unlike other libraries that try to be swiss-knift for all LCD modules, this library targeting only on LCD modules with PCD8544 chip with compact code and reliable SPI interface. It has extremely low usage of SRAM with only 23 bytes (depends on MCU used).
 
 ## Installation
 
