@@ -1,7 +1,10 @@
 #include "LCD5110.h"
 
-LCD5110::LCD5110(const uint8_t dc, const uint8_t led)
-{
+LCD5110::LCD5110() {
+
+}
+
+void LCD5110::begin(const uint8_t dc, const uint8_t led){
   _DC = dc;
   _BACKLIGHT = led;
 
@@ -11,7 +14,6 @@ LCD5110::LCD5110(const uint8_t dc, const uint8_t led)
   digitalWrite(SS, HIGH);
 
   SPI.begin();    //set SCK, MOSI, and SS to outputs, pulling SCK and MOSI low, and SS high.
-
   _write(CMD, 0x21);  // Set Extended Command set
   _write(CMD, 0xb2);  // Set Vlcd to 6v (LCD Contrast)
   _write(CMD, 0x13);  // Set voltage bias system 1:48 (Viewing Angle)
@@ -59,8 +61,14 @@ void LCD5110::inverse(const uint8_t inv) {
 void LCD5110::printImage(const char *image) {
   cursor(1,1);
   for (int i = 0; i < (LCD_WIDTH * LCD_HEIGHT / 8); i++) {
-    _write(DATA, pgm_read_byte_near(image + i));
+    _write(DATA, pgm_read_byte(image + i));
   }
+}
+
+void LCD5110::printStr(const char *str PROGMEM) {
+  const char buffer[strlen_P(str)+1];
+  strcpy_P(buffer, str);
+  printStr(&buffer);
 }
 
 void LCD5110::printStr(const char *str) {
@@ -166,10 +174,21 @@ void LCD5110::printStr(const char *str) {
   while (str[p]!='\0') {
     if ( (str[p] >= 0x20) & (str[p] <= 0x7f) ) {
       for (int i = 0; i < 5; i++) {
-        _write(DATA, pgm_read_byte_near(FONT_TABLE[str[p] - 32] + i));
+        _write(DATA, pgm_read_byte(FONT_TABLE[str[p] - 32] + i));
       }
       _write(DATA, 0x00);
     }
     p++;
+  }
+}
+
+void LCD5110::printStr(const __FlashStringHelper *strLiteral) {
+  PGM_P p = reinterpret_cast<PGM_P>(strLiteral);
+
+  char *ptr = (char *)malloc(strlen_P(p));
+  if (ptr != NULL) {  // if memory allocation successful
+    strcpy_P(ptr, p);
+    printStr(ptr);    // function overload
+    free(ptr);
   }
 }

@@ -19,12 +19,14 @@
 class LCD5110
 {
   public:
-    LCD5110(const uint8_t dc, const uint8_t led);
+    LCD5110();
+    void begin(const uint8_t dc, const uint8_t led);
     void clear(void);
     void cursor(uint8_t row, uint8_t col);
     void backlight(const uint8_t state);
     void inverse(const uint8_t inv);
     void printStr(const char *str);
+    void printStr(const __FlashStringHelper *strLiteral);
     void printImage(const char *image);
   private:
     void _write(const uint8_t mode, char data);

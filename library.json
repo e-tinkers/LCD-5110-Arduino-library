@@ -1,12 +1,12 @@
 {
-  "name": "LCD5110/PCD8544 Library",
+  "name": "Simple LCD5110/PCD8544 Library",
   "keywords": "LCD, display",
   "description": "A simple and easy-to-use library for LCD5110 (a.k.a. Nokia5110, PCD8544) display module",
   "repository": {
     "type": "git",
     "url": "https://github.com/e-tinkers/LCD-5110-Arduino-library"
   },
-  "version": "3.0.0",
+  "version": "3.1.0",
   "authors": {
     "name": "Henry Cheung",
     "url": "https://www.e-tinkers.com"
