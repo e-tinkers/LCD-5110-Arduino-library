@@ -12,5 +12,5 @@
     "url": "https://www.e-tinkers.com"
   },
   "frameworks": "arduino",
-  "platforms": "*"
+  "platforms": "avr, stm32"
 }
