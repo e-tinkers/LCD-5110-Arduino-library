@@ -12,5 +12,5 @@
     "url": "https://www.e-tinkers.com"
   },
   "frameworks": "arduino",
-  "platforms": "avr, stm32"
+  "platforms": ["atmelavr", "ststm32", "espressif32", :espressif8266"]
 }
