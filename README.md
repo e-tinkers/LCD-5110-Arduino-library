@@ -1,5 +1,5 @@
 # Simple LCD5110/PCD8544 library
-This is a simple and SRAM-efficient Arduino library for LCD 5110 (a.k.a. Nokia 5110 or PCD8544) display module. Unlike other libraries that try to be swiss-knift for all LCD modules, this library targeting only on LCD modules with PCD8544 chip with compact code and reliable SPI interface. It has extremely low usage of SRAM with only 23 bytes (depends on MCU used).
+This is a simple and SRAM-efficient Arduino library for LCD 5110 (a.k.a. Nokia 5110 or PCD8544) display module. Unlike other libraries that try to be swiss-knift for all LCD modules, this library targeting only on LCD5110 with compact code and reliable SPI interface. It has extremely low usage of only 23 bytes SRAM (depends on MCU used).
 
 ## Installation
 
@@ -54,6 +54,7 @@ By default, the library assumed that the LCD module is connected with SPI pins b
 
 
 **`void LCD5110.printStr(const char *str)`**
+
 **`void LCD5110.printStr((__FlashStringHelper *) *str)`**
 - Print string on the LCD screen. The string can be either a c string array or string literal. Noted that both c string array and string literal will be loaded into SRAM during execution. To save memory usage, it is recommended to use F() macro or [PROGMEM](https://www.arduino.cc/reference/en/language/variables/utilities/progmem/) variable when calling `LCD5110.printStr()`. See example for the usage.
 
