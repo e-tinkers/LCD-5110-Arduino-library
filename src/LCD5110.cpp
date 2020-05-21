@@ -24,7 +24,7 @@ void LCD5110::begin(const uint8_t dc, const uint8_t led){
 }
 
 void LCD5110::clear(void) {
-  cursor(0,0);
+  cursor(1,1);
   for (int pixel=(LCD_WIDTH * LCD_HEIGHT / 8); pixel > 0; pixel--) {
     _write(DATA, 0x00);
   }
