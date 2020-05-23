@@ -65,12 +65,6 @@ void LCD5110::printImage(const char *image) {
   }
 }
 
-void LCD5110::printStr(const char *str PROGMEM) {
-  const char buffer[strlen_P(str)+1];
-  strcpy_P(buffer, str);
-  printStr(&buffer);
-}
-
 void LCD5110::printStr(const char *str) {
   static const char FONT_TABLE [][5] PROGMEM = {
     { 0x00, 0x00, 0x00, 0x00, 0x00 }, // 0x20, space
