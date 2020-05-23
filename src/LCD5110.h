@@ -30,6 +30,7 @@ class LCD5110
     void printImage(const char *image);
   private:
     void _write(const uint8_t mode, char data);
+    void _write(const uint8_t mode, const char* buff, int length);
     uint8_t _inverse = OFF;
     uint8_t _DC;
     uint8_t _BACKLIGHT;

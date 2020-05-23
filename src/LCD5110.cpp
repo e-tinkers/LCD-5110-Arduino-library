@@ -24,10 +24,22 @@ void LCD5110::begin(const uint8_t dc, const uint8_t led){
 }
 
 void LCD5110::clear(void) {
-  cursor(1,1);
-  for (int pixel=(LCD_WIDTH * LCD_HEIGHT / 8); pixel > 0; pixel--) {
-    _write(DATA, 0x00);
+  char *pBuff = (char *)malloc(LCD_WIDTH);
+  // if allocation failed, write LCD memory byte by byte via SPI
+  if (pBuff == NULL) {
+    cursor(1,1);
+    for (int pixel=(LCD_WIDTH * LCD_HEIGHT / 8); pixel > 0; pixel--) {
+      _write(DATA, 0x00);
+    }
+    return;
   }
+  // write LCD memory equal to LCD_WIDTH bytes with one SPI transaction
+  for (int row = 1; row < (LCD_HEIGHT / 8 + 1); row++) {
+    cursor(row, 1);
+    memset(pBuff, 0x00, LCD_WIDTH);
+    _write(DATA, pBuff, LCD_WIDTH);
+  }
+  free(pBuff);
 }
 
 void LCD5110::cursor(uint8_t row, uint8_t col) {
@@ -50,6 +62,15 @@ void LCD5110::_write(const uint8_t mode, char data) {
   SPI.endTransaction();
 }
 
+void LCD5110::_write(const uint8_t mode, const char* buff, int length) {
+  SPI.beginTransaction(SPISettings(16000000, MSBFIRST, SPI_MODE0));
+  digitalWrite(SS, LOW);
+  digitalWrite(_DC, mode);
+  SPI.transfer(buff, length);
+  digitalWrite(SS, HIGH);
+  SPI.endTransaction();
+}
+
 void LCD5110::backlight(const uint8_t state) {
   digitalWrite(_BACKLIGHT, state);
 }
@@ -59,16 +80,29 @@ void LCD5110::inverse(const uint8_t inv) {
 }
 
 void LCD5110::printImage(const char *image) {
-  cursor(1,1);
-  for (int i = 0; i < (LCD_WIDTH * LCD_HEIGHT / 8); i++) {
-    _write(DATA, pgm_read_byte(image + i));
+  char *pBuff = (char *)malloc(LCD_WIDTH);
+  if (pBuff == NULL) {
+    cursor(1,1);
+    for (int i = 0; i < (LCD_WIDTH * LCD_HEIGHT / 8); i++) {
+      _write(DATA, pgm_read_byte(image + i));
+    }
+    return;
   }
-}
 
-void LCD5110::printStr(const char *str PROGMEM) {
-  const char buffer[strlen_P(str)+1];
-  strcpy_P(buffer, str);
-  printStr(&buffer);
+  int i = 0;
+  while (i < (LCD_WIDTH * LCD_HEIGHT / 8)) {
+    for (int col = 0; col < LCD_WIDTH; col++) {
+      if (_inverse == OFF) {
+        *(pBuff + col) = pgm_read_byte(image + i);
+      }
+      else {
+        *(pBuff + col) = ~pgm_read_word(image + i);
+      }
+      i++;
+    }
+    _write(DATA, pBuff, LCD_WIDTH);
+  }
+  free(pBuff);
 }
 
 void LCD5110::printStr(const char *str) {
@@ -170,16 +204,41 @@ void LCD5110::printStr(const char *str) {
     { 0x10, 0x08, 0x08, 0x10, 0x08 }, // 0x7e, ~
     { 0x78, 0x46, 0x41, 0x46, 0x78 }  // 0x7f, DEL
   };
+
   int p = 0;
-  while (str[p]!='\0') {
-    if ( (str[p] >= 0x20) & (str[p] <= 0x7f) ) {
-      for (int i = 0; i < 5; i++) {
-        _write(DATA, pgm_read_byte(FONT_TABLE[str[p] - 32] + i));
+  char *pBuff = (char *)malloc(6);
+
+  if (pBuff == NULL) {
+    while (str[p]!='\0') {
+      if ( (str[p] >= 0x20) & (str[p] <= 0x7f) ) {
+        for (int i = 0; i < 5; i++) {
+          _write(DATA, pgm_read_byte(FONT_TABLE[str[p] - 32] + i));
+        }
+        _write(DATA, 0x00);
       }
-      _write(DATA, 0x00);
+      p++;
+    }
+    return;
+  }
+
+  while (str[p] != '\0') {
+    if ( (str[p] >= 0x20) & (str[p] <= 0x7f) ) {
+      for (int i=0; i < 5; i++) {
+        if (_inverse == OFF) {
+          *(pBuff + i) = pgm_read_byte(FONT_TABLE[str[p] - 32] + i);
+        }
+        else {
+          *(pBuff + i) = ~pgm_read_byte(FONT_TABLE[str[p] - 32] + i);
+        }
+      }
+      if (_inverse == ON) {
+        *(pBuff + 5) = 0xff;
+      }
+      _write(DATA, pBuff, 6);
     }
     p++;
   }
+  free(pBuff);
 }
 
 void LCD5110::printStr(const __FlashStringHelper *strLiteral) {
