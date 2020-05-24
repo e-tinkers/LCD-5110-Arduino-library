@@ -12,3 +12,5 @@ printStr	KEYWORD2
 printImage	KEYWORD2
 
 # Constants (LITERAL1)
+ON LITERAL1
+OFF LITERAL1

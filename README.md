@@ -16,7 +16,7 @@ By default, the library assumed that the LCD module is connected with SPI pins b
 |DC|D8|0: Command mode, 1: Data mode|
 |RST|RST|Reset the chip when RST=0|
 |SCE|SS|System Chip Enable when SCE=0|
-|LED|D7|Turn ON/OFF Backlight LED|
+|LED|D7*|Turn ON/OFF Backlight LED|
 |GND|GND|System ground|
 |VCC|3v3|Power Supply from 2.7 - 5v|
 
@@ -59,7 +59,7 @@ By default, the library assumed that the LCD module is connected with SPI pins b
 - Print string on the LCD screen. The string can be either a c string array or string literal. Noted that both c string array and string literal will be loaded into SRAM during execution. To save memory usage, it is recommended to use F() macro or [PROGMEM](https://www.arduino.cc/reference/en/language/variables/utilities/progmem/) variable when calling `LCD5110.printStr()`. See example for the usage.
 
 **`void LCD5110.printImage(const char *image)`**
-- Print image[], image is an array[504] of pixels data. The method is expecting the image to be declared with PROGMEM modifier (that is, it get read from the program memory). See example for the usage.
+- Print image, image is an array[504] of pixels data. The method is expecting the image to be declared with PROGMEM modifier (that is, it get read from the program memory). See example for the usage.
 
 ## Extra
 [Nokia5110 LCD Image Creator](https://www.e-tinkers.com/nokia5110-lcd-image-creator/) is a web application that provides a pixel canvas for creating logo image to be used by LCD5110. The app will generate a logo array that you can be used as an image in the sketch.
